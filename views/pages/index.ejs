@@ -1,10 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr-FR">
 
 <head>
-  <title>
-    <%= title %>
-  </title>
   <%- include('../partials/head') %>
 </head>
 
@@ -16,8 +13,8 @@
     </h1>
     <form method="post" action="/users">
       <input class="form-control" type="text" name="login" placeholder="Enter your login" autocomplete="current-password" required />
-      <input class="form-control" type="password" name="password" placeholder="Enter your password" autocomplete="current-password" required /> <br>
-      <input class="btn btn-primary" type="submit" value="Connexion" />
+      <input class="form-control mt-2" type="password" name="password" placeholder="Enter your password" autocomplete="current-password" required />
+      <input class="btn btn-primary mt-2" type="submit" value="Connexion" />
       <% if (error == 1) { %>
         <p class="text-danger"> Utilisateur ou mot de passe inconnu !</p>
       <% } %>

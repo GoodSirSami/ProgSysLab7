@@ -10,10 +10,6 @@
     <%- include('../partials/changeTXT') %>
     <%- include('../partials/changePASS') %>
     
-    <form method="get" action="/">
-        <input type="submit" value="Déconnexion" />
-    </form>
-
     <script type="module">
         const socket = io();
         const password = document.getElementById('password');
@@ -24,11 +20,13 @@
         });
         password.addEventListener('submit', (e) => {
           e.preventDefault();
-          socket.emit('changePassword', { password: password.password.value , login: '<%= login%>'});
+          socket.emit('changePassword', { password: password.password.value , login: document.getElementById('login').innerText});
         });
         
         socket.on('textSuccess', (data) => {
-          $('#pTexte').text(data.texte);
+            if (data.login === document.getElementById('login').innerText) {
+                $('#pTexte').text(data.texte);
+            }
         });
     </script>
      <%- include('../partials/footer') %>
