@@ -1,6 +1,6 @@
 {
   "name": "progsyslab7",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "start": "node ./bin/www"
@@ -26,5 +26,6 @@
     "cool"
   ],
   "author": "samuel Des Cormiers",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {}
 }

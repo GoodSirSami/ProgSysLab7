@@ -1,3 +1,11 @@
+/**
+ * @author Samuel Des Cormiers
+ * @date 2024-10-21
+ * @description Fichier de routage pour la page de login ainsi que les pages de niveaux
+ * @version 1.0
+ * @file index.js
+ */
+
 var express = require('express');
 var router = express.Router();
 var session = require('cookie-session');
@@ -18,7 +26,7 @@ connection.connect(function (err) {
 
 router.use(session({
   secret: 'todotopsecret'
-})).use(function(req, res, next){
+})).use(function(req, res, next){ // Création de la session si elle n'existe pas
   if (typeof(req.session.user) == 'undefined') {
     console.log('Création de la session');
     req.session.user = {
@@ -28,7 +36,7 @@ router.use(session({
     };
   }
   next();
-}).get('/', function(req, res, next) {
+}).get('/', function(req, res, next) { // Page de login et de redirection (si erreur de connection)
   if (req.session.user.id == 0 && req.session.user.login == '') {
     res.render('pages/index', { title: 'Login', error: req.query.error });
   }
@@ -59,7 +67,7 @@ router.use(session({
       }
     })
   }
-}).post('/', function(req, res, next) {
+}).post('/', function(req, res, next) { // Vérification des données de login et affichage de la page correspondante
   if (req.session.user.id == 0 && req.session.user.login == '') {
     // Nettoyage des données
   let log = req.body.login.replace(/"/g, '').replace(/'/g, '').replace(/;/g, '').replace(/`/g, '').replace(/%/g, '');
@@ -100,7 +108,7 @@ router.use(session({
     }
   });
   }
-}).post('/logout', function(req, res, next) {
+}).post('/logout', function(req, res, next) { // Déconnexion de l'utilisateur
   console.log('Déconnexion');
   req.session.user.id = 0;
   req.session.user.login = '';
@@ -108,12 +116,7 @@ router.use(session({
   res.redirect('/');
 });
 
-
-
-
-
-
-io.on('connection', function(socket){
+io.on('connection', function(socket){ // Gestion des sockets pour changement de texte et de mot de passe
   socket.on('changeTexte', function(data){
     let texte = '';
     if(data.texte)
@@ -150,7 +153,5 @@ io.on('connection', function(socket){
     });
   });
 });
-
-
 
 module.exports = router;
